@@ -4,7 +4,7 @@
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>2171bbbf-94dc-4384-9f31-f6ec5bd002c6</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <StartupFile>MyCode\__init__.py</StartupFile>
+    <StartupFile>DashFlask.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -12,6 +12,7 @@
     <Name>DashFlask</Name>
     <RootNamespace>DashFlask</RootNamespace>
     <InterpreterId>CondaEnv|CondaEnv|DashSite</InterpreterId>
+    <IsWindowsApplication>False</IsWindowsApplication>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -22,15 +23,19 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="DashFlask.py" />
     <Compile Include="MyCode\__init__.py" />
     <Compile Include="MyCode\routes.py" />
-    <Compile Include="startSite.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="CondaEnv|CondaEnv|DashSite" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MyCode\" />
+    <Folder Include="MyCode\templates\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="MyCode\templates\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
