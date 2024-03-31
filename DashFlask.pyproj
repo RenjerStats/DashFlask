@@ -35,6 +35,7 @@
     <Folder Include="MyCode\templates\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="MyCode\templates\base.html" />
     <Content Include="MyCode\templates\index.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />

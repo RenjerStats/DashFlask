@@ -1,11 +1,10 @@
-# -*- coding: utf-8 -*-
-from . import app
+п»їfrom . import app
 from flask import render_template
 
 @app.route('/')
 @app.route('/index')
 def index():
-    user = {'username': 'Эльдар Рязанов'}
+    user = {'username': 'Р­Р»СЊРґР°СЂ Р СЏР·Р°РЅРѕРІ'}
     posts = [
         {
             'author': {'username': 'John'},
@@ -16,8 +15,8 @@ def index():
             'body': 'The Avengers movie was so cool!'
         }, 
         {
-            'author': {'username': 'Ипполит'},
-            'body': 'Какая гадость эта ваша заливная рыба!!'
+            'author': {'username': 'РРїРїРѕР»РёС‚'},
+            'body': 'РљР°РєР°СЏ РіР°РґРѕСЃС‚СЊ СЌС‚Р° РІР°С€Р° Р·Р°Р»РёРІРЅР°СЏ СЂС‹Р±Р°!!'
         }
     ]
     return render_template('index.html', title='Home', user=user, posts=posts)
