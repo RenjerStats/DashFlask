@@ -24,8 +24,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DashFlask.py" />
+    <Compile Include="MyCode\forms.py" />
     <Compile Include="MyCode\__init__.py" />
     <Compile Include="MyCode\routes.py" />
+    <Compile Include="config.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="CondaEnv|CondaEnv|DashSite" />
@@ -37,6 +39,7 @@
   <ItemGroup>
     <Content Include="MyCode\templates\base.html" />
     <Content Include="MyCode\templates\index.html" />
+    <Content Include="MyCode\templates\login.html" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
