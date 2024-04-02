@@ -26,7 +26,6 @@
     <Compile Include="DashFlask.py" />
     <Compile Include="MyCode\dashboard.py" />
     <Compile Include="MyCode\forms.py" />
-    <Compile Include="MyCode\templates\baseDash.py" />
     <Compile Include="MyCode\__init__.py" />
     <Compile Include="MyCode\routes.py" />
     <Compile Include="config.py" />
