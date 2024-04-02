@@ -24,11 +24,14 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DashFlask.py" />
+    <Compile Include="infl-parser.py" />
     <Compile Include="MyCode\dashboard.py" />
     <Compile Include="MyCode\forms.py" />
     <Compile Include="MyCode\__init__.py" />
     <Compile Include="MyCode\routes.py" />
     <Compile Include="config.py" />
+    <Compile Include="MyCode\parser.py" />
+    <Compile Include="rate-parser.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="CondaEnv|CondaEnv|DashSite" />

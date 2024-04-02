@@ -9,8 +9,7 @@ def create_app():
     with app.app_context():
         from .dashboard import init_dashboard
         from . import routes
-
+        
         app = init_dashboard(app)
         
-
         return app

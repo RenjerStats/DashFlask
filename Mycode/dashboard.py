@@ -1,5 +1,5 @@
-import dash
-from dash import dash_table
+﻿import dash
+from dash import Input, Output
 from dash import dcc
 from dash import html
 import pandas as pd
@@ -9,21 +9,41 @@ def init_dashboard(server):
     dash_app = dash.Dash(
         server=server,
         routes_pathname_prefix="/dash/",
-        external_stylesheets=[
-            "https://fonts.googleapis.com/css?family=Lato"
-        ],
+        external_stylesheets=["https://fonts.googleapis.com/css?family=Lato"],
     )
-
-    df = pd.DataFrame({'x':[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 'y':[2, 4, 6, 10, 16, 26, 42, 68, 110, 178]})
+    df = pd.date_range(0, 100, 5)
 
     dash_app.index_string = open("MyCode/templates/dash.html", encoding='UTF-8').read()
-
-    dash_app.layout = html.Div(
-        children=[
-           dcc.Graph(id="baseGraph", figure=px.scatter(df, x='x', y='y'))
-        ],
-        id="dash-container",
-    )
+    dash_app.layout = get_layout(df)
+        
+    init_callbacks(dash_app)
     return dash_app.server
 
 
+def get_layout(df):
+    droplist = dcc.Dropdown(
+        [1, 2, 3, 4, 5],
+        value=[1, 5],
+        id = 'dropdown',
+        multi=True,
+        clearable=False,
+        optionHeight=50)
+        
+    layout = html.Div(
+        children=[
+            dcc.Graph(id="base_graph", figure=px.scatter(df)),
+            droplist
+        ]
+    )
+    return layout
+
+def init_callbacks(app):
+    @app.callback(
+        Output('base_graph', 'figure'),
+        Input('dropdown', 'value'),
+        prevent_initial_call=True)
+    def update_graph(input):
+        df = pd.DataFrame(input)
+        return px.scatter(df)
+            
+    
