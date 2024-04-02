@@ -30,7 +30,6 @@
     <Compile Include="MyCode\__init__.py" />
     <Compile Include="MyCode\routes.py" />
     <Compile Include="config.py" />
-    <Compile Include="MyCode\parser.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="CondaEnv|CondaEnv|DashSite" />

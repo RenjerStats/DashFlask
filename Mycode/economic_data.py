@@ -1,14 +1,18 @@
-import requests
+﻿import requests
 from bs4 import BeautifulSoup
 import pandas as pd
 
 
 class Economic_data:
-    def init(self, start_date, end_date):
+    def __init__(self, start_date, end_date):
+        self.set_dates(start_date, end_date)
+        self.currency_links = {'USD': 'R01235', 'CNY': 'R01375', 'EUR': 'R01239', 'GBP': 'R01035'}
+        self.names_exchange_rate = {'USD': 'Доллар', 'CNY': 'Китайский юань', 'EUR': 'Евро', 'GBP': 'Фунт стерлингов'}
+
+    def set_dates(self, start_date, end_date):
         self.start_date = start_date
         self.end_date = end_date
-        self.currency_links = {'USD': 'R01235', 'CNY': 'R01375', 'EUR': 'R01239', 'GBP': 'R01035'}
-
+        
     def central_bank_rate(self):
         html = requests.get(f'https://cbr.ru/hd_base/KeyRate/?UniDbQuery.Posted=True&UniDbQuery.From={self.start_date}'
                             f'&UniDbQuery.To={self.end_date}').text
