@@ -11,7 +11,7 @@ def init_dashboard(server):
         routes_pathname_prefix="/dash/",
         external_stylesheets=["https://fonts.googleapis.com/css?family=Lato"],
     )
-    df = pd.date_range(0, 100, 5)
+    df = []
 
     dash_app.index_string = open("MyCode/templates/dash.html", encoding='UTF-8').read()
     dash_app.layout = get_layout(df)
@@ -21,29 +21,53 @@ def init_dashboard(server):
 
 
 def get_layout(df):
-    droplist = dcc.Dropdown(
-        [1, 2, 3, 4, 5],
-        value=[1, 5],
-        id = 'dropdown',
+    button1 = html.Button(id='buttonCreate', children='курсы валют')
+    button2 = html.Button(id='buttonCreate', children='курсы бумаг')
+    button3 = html.Button(id='buttonCreate', children='курсы ЦБ')
+    
+    droplist1 = dcc.Dropdown(
+        [1, 2, 3, 5, 7],
+        value=2,
+        id = 'dropdown1',
+        multi=False,
+        clearable=False,
+        optionHeight=50,
+        )
+    droplist2 = dcc.Dropdown(
+        [2, 4, 6, 8, 10],
+        value=[2, 4],
+        id = 'dropdown2',
         multi=True,
         clearable=False,
-        optionHeight=50)
-        
+        optionHeight=50,
+        )
+    
     layout = html.Div(
         children=[
             dcc.Graph(id="base_graph", figure=px.scatter(df)),
-            droplist
+            droplist1, droplist2
         ]
     )
     return layout
 
 def init_callbacks(app):
     @app.callback(
-        Output('base_graph', 'figure'),
-        Input('dropdown', 'value'),
+        Output('dropdown2', 'options'),
+        Output('dropdown2', 'value'),
+        Input('dropdown1', 'value'),
         prevent_initial_call=True)
-    def update_graph(input):
-        df = pd.DataFrame(input)
+    def update_graph1(val):
+        options = [i*val for i in range(1, 5)]
+        return options, [options[0], options[1]]
+    
+    @app.callback(
+        Output('base_graph', 'figure'),
+        Input('dropdown2', 'value'),
+        #prevent_initial_call=True
+        )
+    def update_graph2(vals):
+        print(vals)
+        df = pd.DataFrame(vals)
         return px.scatter(df)
             
     
