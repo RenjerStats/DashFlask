@@ -1,5 +1,9 @@
 ﻿<html>
     <head>
+        <meta charset="utf-8" />
+        
+        <link rel="icon" href=https://icon-icons.com/icons2/3404/PNG/96/dashboard_icon_215905.png type="image/x-icon">
+        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
         {% if title %}
         <title>{{ title }} - microblog</title>
         {% else %}
@@ -8,7 +12,8 @@
     </head>
     <body>
         <div>
-            <a href="/login"><img src="images/icone.png" width="50" height="50" border="0" alt="главная"></a>
+            <a href="/"><img src=https://icon-icons.com/icons2/4147/PNG/96/dashboard_analytics_dashboard_performance_data_visualization_icon_261170.png width="60" height="60" border="0" alt="главная" type="image/icon type"></a>
+            <a href="/login">регистрация</a>
             <a href="/dash1">графики валюты</a>
             <a href="/dash2">графики акций</a>
             <a href="/dash3">ставка Центробанка</a>

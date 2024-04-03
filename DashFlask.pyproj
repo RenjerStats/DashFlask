@@ -33,7 +33,6 @@
     <Compile Include="MyCode\__init__.py" />
     <Compile Include="MyCode\routes.py" />
     <Compile Include="config.py" />
-    <Compile Include="MyCode\parser.py" />
   </ItemGroup>
   <ItemGroup>
     <InterpreterReference Include="CondaEnv|CondaEnv|DashSite" />
@@ -41,12 +40,16 @@
   <ItemGroup>
     <Folder Include="MyCode\" />
     <Folder Include="MyCode\dashboards\" />
+    <Folder Include="MyCode\static\" />
     <Folder Include="MyCode\templates\" />
-    <Folder Include="images\" />
+    <Folder Include="MyCode\static\images\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="images\icone.png" />
+    <Content Include="MyCode\static\images\cat.jpg" />
+    <Content Include="MyCode\static\images\icon.png" />
     <Content Include="MyCode\templates\base.html" />
+    <Content Include="MyCode\static\base.css" />
+    <Content Include="MyCode\static\dash.css" />
     <Content Include="MyCode\templates\dash.html" />
     <Content Include="MyCode\templates\index.html" />
     <Content Include="MyCode\templates\login.html" />

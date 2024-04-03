@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
     <html>
         <head>
+            <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
             {%metas%}
             <title>{%title%}</title>
             {%favicon%}
@@ -9,12 +10,12 @@
         <body class="dash-template">
             <header>
                <div>
-                    Microblog:
                     <a href="/index">Home</a>
                     <a href="/login">Login</a>
                     <a href="/dash1">графики валюты</a>
                     <a href="/dash2">графики акций</a>
                     <a href="/dash3">ставка Центробанка</a>
+                    <hr>
                 </div>
             </header>
             {%app_entry%}

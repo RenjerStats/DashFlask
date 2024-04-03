@@ -1,5 +1,5 @@
 ﻿import dash
-from dash import Input, Output, State, no_update
+from dash import Input, Output, State
 from dash import dcc
 from dash import html
 import plotly.express as px
@@ -8,7 +8,18 @@ from Mycode.economic_data import Economic_data
 class Base_dashboard(object):
     def __init__(self, pathname, name="dash"):
         self.name = name
-        dash_app = dash.Dash(requests_pathname_prefix=pathname, external_stylesheets=["https://fonts.googleapis.com/css?family=Lato"])
+        external_stylesheets = [
+            'https://codepen.io/chriddyp/pen/bWLwgP.css',
+            {
+                'href': 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
+                'rel': 'stylesheet',
+                'integrity': 'sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO',
+                'crossorigin': 'anonymous'
+            }
+        ]
+
+
+        dash_app = dash.Dash(requests_pathname_prefix=pathname, external_stylesheets=external_stylesheets, update_title='обновление...')
         dash_app.index_string = open("MyCode/templates/dash.html", encoding='UTF-8').read() # шапка dashboard-а
         self.app = dash_app
     
@@ -35,13 +46,8 @@ class Base_dashboard(object):
                 date_start, date_end, button_set_date
             ]
         )
+        
         self.app.layout = layout
        
     def init_callbacks(self, func):        
         func(self.app)
-        
-
-
-
-
-
