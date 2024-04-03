@@ -4,7 +4,6 @@ from Mycode.economic_data import Economic_data
 import plotly.express as px
 from dash import dcc
 from dash import html
-import pandas as pd
 
 def create_dash1(requests_pathname_prefix):
     dash = Base_dashboard(requests_pathname_prefix, "Курсы валют")
@@ -18,7 +17,7 @@ def create_dash1(requests_pathname_prefix):
         optionHeight=50,
         )
     dop_layout = html.Div(children=[
-        dcc.Graph(id="base_graph", figure=px.scatter()),
+        dcc.Graph(id="graph"),
         dropdown_curses
         ])
     
@@ -28,7 +27,7 @@ def create_dash1(requests_pathname_prefix):
 
 def UI(app):
     @app.callback(
-    Output('base_graph', 'figure'),
+    Output('graph', 'figure'),
     Input('button_set_date', 'n_clicks'),
     State('date_start', "date"),
     State('date_end', "date"),
@@ -36,23 +35,15 @@ def UI(app):
     prevent_initial_call = False
     )
     def update_date(count_click, str_start, str_end, curses):
-        # date_start = datetime.strptime(str_start, '%Y/%m/%d').date()
-        # date_end = datetime.strptime(str_end, '%Y/%m/%d').date()
-        # if date_end - date_start <= timedelta(days=5):
-        #     return no_update
-        fig = px.line()
+        str_start = Economic_data.convert_date(str_start)
+        str_end = Economic_data.convert_date(str_end)
         if curses == []:
-            return fig
+            return px.line()
         if isinstance(curses, str):
-            #df = Economic_data.currency_exchange_rate(curses, str_start, str_end)
-            dates = ["01.02.2024", "02.02.2024", "03.02.2024", "04.02.2024", "05.02.2024"]
-            rates = [1, 3, 5, 10, 7]
-            df = pd.DataFrame({'date': dates, 'rate': rates})
-            fig.add_scattergl(x=df['date'], y=df['rate'], name=curses)
+            df = Economic_data.select_currency_exchange_rate(curses, str_start, str_end)
+            return px.line(df, x='date', y='rate')
         else:
-            for curse in curses:
-                df = Economic_data.currency_exchange_rate(curse, str_start, str_end)
-            fig.add_scattergl(x=df['date'], y=df['rate'], name=curse)
+            df = [Economic_data.select_currency_exchange_rate(curse, str_start, str_end).assign(name=curse) for curse in curses]
             
-        return fig
+        return px.line(df, x='date', y='rate', color='name', symbol="name")
     

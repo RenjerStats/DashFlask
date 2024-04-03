@@ -30,6 +30,7 @@
     <Compile Include="MyCode\dashboards\dash3.py" />
     <Compile Include="MyCode\economic_data.py" />
     <Compile Include="MyCode\forms.py" />
+    <Compile Include="Mycode\parser.py" />
     <Compile Include="MyCode\__init__.py" />
     <Compile Include="MyCode\routes.py" />
     <Compile Include="config.py" />

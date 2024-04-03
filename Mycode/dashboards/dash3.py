@@ -4,14 +4,13 @@ from Mycode.economic_data import Economic_data
 import plotly.express as px
 from dash import dcc
 from dash import html
-import pandas as pd
 
 def create_dash3(requests_pathname_prefix):
     dash = Base_dashboard(requests_pathname_prefix, "Ставка Центробанка")
     
     dropdown_curses = dcc.Dropdown(
-        options=Economic_data.get_name_curses(),
-        value=Economic_data.get_short_name_curses()[0],
+        options=["ключевая ставка ЦБ", "инфляция"],
+        value="ключевая ставка ЦБ",
         id = 'dropdown_curses',
         multi=True,
         clearable=False,
@@ -36,24 +35,23 @@ def UI(app):
     prevent_initial_call = False
     )
     def update_date(count_click, str_start, str_end, curses):
-        # date_start = datetime.strptime(str_start, '%Y/%m/%d').date()
-        # date_end = datetime.strptime(str_end, '%Y/%m/%d').date()
-        # if date_end - date_start <= timedelta(days=5):
-        #     return no_update
+        str_start = Economic_data.convert_date(str_start)
+        str_end = Economic_data.convert_date(str_end)
         fig = px.line()
         if curses == []:
             return fig
+        
         if isinstance(curses, str):
-            #df = Economic_data.currency_exchange_rate(curses, str_start, str_end)
-            dates = ["01.02.2024", "02.02.2024", "03.02.2024", "04.02.2024", "05.02.2024"]
-            rates = [1, 3, 5, 10, 7]
-            df = pd.DataFrame({'date': dates, 'rate': rates})
+            if curses == "инфляция":
+                df = Economic_data.select_inflation_rate(str_start, str_end)
+            else:
+                df = Economic_data.select_central_bank_rate(str_start, str_end)
             fig.add_scattergl(x=df['date'], y=df['rate'], name=curses)
         else:
-            for curse in curses:
-                df = Economic_data.currency_exchange_rate(curse, str_start, str_end)
-            fig.add_scattergl(x=df['date'], y=df['rate'], name=curse)
+            df = Economic_data.select_inflation_rate(str_start, str_end)
+            fig.add_scattergl(x=df['date'], y=df['rate'], name="инфляция")
+            df = Economic_data.select_central_bank_rate(str_start, str_end)
+            fig.add_scattergl(x=df['date'], y=df['rate'], name="ставка ЦБ")
             
         return fig
     
-
