@@ -24,7 +24,10 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="DashFlask.py" />
-    <Compile Include="MyCode\dashboard.py" />
+    <Compile Include="MyCode\dashboards\base_dashboard.py" />
+    <Compile Include="MyCode\dashboards\dash1.py" />
+    <Compile Include="MyCode\dashboards\dash2.py" />
+    <Compile Include="MyCode\dashboards\dash3.py" />
     <Compile Include="MyCode\economic_data.py" />
     <Compile Include="MyCode\forms.py" />
     <Compile Include="MyCode\__init__.py" />
@@ -37,9 +40,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="MyCode\" />
+    <Folder Include="MyCode\dashboards\" />
     <Folder Include="MyCode\templates\" />
+    <Folder Include="images\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="images\icone.png" />
     <Content Include="MyCode\templates\base.html" />
     <Content Include="MyCode\templates\dash.html" />
     <Content Include="MyCode\templates\index.html" />
