@@ -4,6 +4,7 @@ from Mycode.economic_data import Economic_data
 import plotly.express as px
 from dash import dcc
 from dash import html
+import pandas as pd
 
 def create_dash3(requests_pathname_prefix):
     dash = Base_dashboard(requests_pathname_prefix, "Ставка Центробанка")
@@ -12,7 +13,7 @@ def create_dash3(requests_pathname_prefix):
         options=["ключевая ставка ЦБ", "инфляция"],
         value="ключевая ставка ЦБ",
         id = 'dropdown_curses',
-        multi=True,
+        multi=False,
         clearable=False,
         optionHeight=50,
         )
@@ -37,21 +38,13 @@ def UI(app):
     def update_date(count_click, str_start, str_end, curses):
         str_start = Economic_data.convert_date(str_start)
         str_end = Economic_data.convert_date(str_end)
-        fig = px.line()
-        if curses == []:
-            return fig
+        if curses == '':
+            return px.line()
         
-        if isinstance(curses, str):
-            if curses == "инфляция":
-                df = Economic_data.select_inflation_rate(str_start, str_end)
-            else:
-                df = Economic_data.select_central_bank_rate(str_start, str_end)
-            fig.add_scattergl(x=df['date'], y=df['rate'], name=curses)
-        else:
-            df = Economic_data.select_inflation_rate(str_start, str_end)
-            fig.add_scattergl(x=df['date'], y=df['rate'], name="инфляция")
-            df = Economic_data.select_central_bank_rate(str_start, str_end)
-            fig.add_scattergl(x=df['date'], y=df['rate'], name="ставка ЦБ")
-            
-        return fig
+        data = []
+        if curses == 'ключевая ставка ЦБ': data.append(Economic_data.select_central_bank_rate(str_start, str_end).assign(name="инфляция"))
+        elif curses == 'инфляция': data.append(Economic_data.select_inflation_rate(str_start, str_end).assign(name="Курс ЦБ"))
+        df = pd.concat(data)
+        
+        return px.line(df, x='date', y='rate', color='name')
     

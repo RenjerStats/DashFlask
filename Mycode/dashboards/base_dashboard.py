@@ -4,24 +4,14 @@ from dash import dcc
 from dash import html
 import plotly.express as px
 from Mycode.economic_data import Economic_data
-from datetime import datetime
+from datetime import datetime, timedelta
 
 class Base_dashboard(object):
     
     def __init__(self, pathname, name="dash"):
         self.name = name
-        external_stylesheets = [
-            'https://codepen.io/chriddyp/pen/bWLwgP.css',
-            {
-                'href': 'https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css',
-                'rel': 'stylesheet',
-                'integrity': 'sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO',
-                'crossorigin': 'anonymous'
-            }
-        ]
 
-
-        dash_app = dash.Dash(requests_pathname_prefix=pathname, external_stylesheets=external_stylesheets, update_title='обновление...')
+        dash_app = dash.Dash(requests_pathname_prefix=pathname, update_title='обновление...')
         dash_app.index_string = open("MyCode/templates/dash.html", encoding='UTF-8').read() # шапка dashboard-а
         self.app = dash_app
     
@@ -31,13 +21,13 @@ class Base_dashboard(object):
             id="date_start",
             is_RTL=True,
             display_format='DD.MM.YYYY',
-            date=Economic_data.get_start_date()
+            date= Economic_data.get_start_date()
         )
         date_end = dcc.DatePickerSingle(
             id="date_end",
             is_RTL=True,
             display_format='DD.MM.YYYY',
-            date=Economic_data.get_today_date()
+            date=(datetime.now() - timedelta(days=1)).date()
         )
         button_set_date = html.Button(id="button_set_date", children="обновить график")
     

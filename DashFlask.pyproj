@@ -41,16 +41,15 @@
   <ItemGroup>
     <Folder Include="MyCode\" />
     <Folder Include="MyCode\dashboards\" />
+    <Folder Include="assets\" />
     <Folder Include="MyCode\static\" />
     <Folder Include="MyCode\templates\" />
-    <Folder Include="MyCode\static\images\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="MyCode\static\images\cat.jpg" />
-    <Content Include="MyCode\static\images\icon.png" />
+    <Content Include="assets\dash.css" />
+    <Content Include="Mycode\static\old_base.css" />
     <Content Include="MyCode\templates\base.html" />
     <Content Include="MyCode\static\base.css" />
-    <Content Include="MyCode\static\dash.css" />
     <Content Include="MyCode\templates\dash.html" />
     <Content Include="MyCode\templates\index.html" />
     <Content Include="MyCode\templates\login.html" />

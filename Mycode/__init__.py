@@ -6,7 +6,8 @@ from .dashboards.dash3 import create_dash3
 from werkzeug.middleware.dispatcher import DispatcherMiddleware
 from werkzeug.serving import run_simple
 from .economic_data import Economic_data
-#import asyncio
+import asyncio
+
 def create_app():
     server = Flask(__name__)
     server.config.from_object(Config)
@@ -14,7 +15,7 @@ def create_app():
     Economic_data.create_dir()
     Economic_data.update_currency_exchange_rate()
     Economic_data.update_central_bank_rate()
-    Economic_data.update_shares_rate()
+    asyncio.run(Economic_data.update_shares_rate())
     Economic_data.update_inflation_rate()
     
     app1 = create_dash1(requests_pathname_prefix="/dash1/")
