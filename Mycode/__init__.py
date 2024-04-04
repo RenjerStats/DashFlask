@@ -15,7 +15,7 @@ def create_app():
     Economic_data.create_dir()
     Economic_data.update_currency_exchange_rate()
     Economic_data.update_central_bank_rate()
-    asyncio.run(Economic_data.update_shares_rate())
+    #asyncio.run(Economic_data.update_shares_rate())
     Economic_data.update_inflation_rate()
     
     app1 = create_dash1(requests_pathname_prefix="/dash1/")

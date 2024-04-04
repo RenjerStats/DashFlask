@@ -1,5 +1,4 @@
-﻿from calendar import day_name
-from datetime import timedelta
+﻿from datetime import timedelta
 from .base_dashboard import Base_dashboard
 from dash import Input, Output, State
 from Mycode.economic_data import Economic_data
@@ -41,8 +40,8 @@ def create_dash2(requests_pathname_prefix):
         )
     
     dop_layout = html.Div(children=[
-        dcc.Graph(id = 'histogram'), dropdown_curse, dropdown_date,
-        dcc.Graph(id = "base_graph"), dropdown_curses
+        dropdown_curse, dropdown_date, dcc.Graph(id = 'histogram'), 
+        dropdown_curses, dcc.Graph(id = "base_graph"),
         ])
     
     dash.set_layout(dop_layout, "Курсы акций")
@@ -67,7 +66,7 @@ def UI(app):
         data = [Economic_data.select_shares_rate(curse, str_start, str_end).assign(name=curse) for curse in curses]
         df = pd.concat(data)
         
-        return px.line(df, x='date', y='rate', color='name')
+        return px.line(df, x='date', y='rate', color='name', template='plotly_dark')
     
     @app.callback(
     Output('histogram', 'figure'),
@@ -84,15 +83,14 @@ def UI(app):
         if str_date == "за год":
             str_start = (datetime.now() - timedelta(days=365)).date().strftime('%d-%m-%Y')
         if str_date == "за все время":
-            str_start = (datetime.now() - timedelta(days=365*10)).date().strftime('%d-%m-%Y')
+            str_start = (datetime.now() - timedelta(days=365*5)).date().strftime('%d-%m-%Y')
         
-        df = Economic_data.select_shares_rate_percent(curse, str_start, str_end)
-        print(df)
-        
+        df = Economic_data.select_shares_rate_percent(curse, str_start, str_end)    
+
         fig = go.Figure(data=go.Bar(
                 x=df['date'],
                 y=df['rate'],
-                marker_color=df['color'].to_list()
+                marker_color=df['color'].to_list(),
             )
         ) 
         return fig

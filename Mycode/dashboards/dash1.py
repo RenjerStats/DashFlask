@@ -17,8 +17,8 @@ def create_dash1(requests_pathname_prefix):
         optionHeight=50,
         )
     dop_layout = html.Div(children=[
+        dropdown_curses,
         dcc.Graph(id="graph"),
-        dropdown_curses
         ])
     
     dash.set_layout(dop_layout, "Курсы валют")
@@ -43,5 +43,5 @@ def UI(app):
         data = [Economic_data.select_currency_exchange_rate(curse, str_start, str_end).assign(name=curse) for curse in curses]
         df = pd.concat(data)
         
-        return px.line(df, x='date', y='rate', color='name')
+        return px.line(df, x='date', y='rate', color='name', template='plotly_dark')
     

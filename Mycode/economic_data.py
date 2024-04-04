@@ -196,7 +196,7 @@ class Economic_data:
         df['rate'] = x
         
         df['color'] = df['rate'].apply(lambda x: 'green' if x >= 0 else 'crimson')
-        return df.iloc[::-1].reset_index(drop=True)
+        return df
 
     def select_shares_rate(company, start_date, end_date):
         df = pd.read_csv(f'data/shares/{company}_shares_rate.csv')

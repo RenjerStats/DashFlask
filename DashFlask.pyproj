@@ -30,7 +30,6 @@
     <Compile Include="MyCode\dashboards\dash3.py" />
     <Compile Include="MyCode\economic_data.py" />
     <Compile Include="MyCode\forms.py" />
-    <Compile Include="MyCode\time_manager.py" />
     <Compile Include="MyCode\__init__.py" />
     <Compile Include="MyCode\routes.py" />
     <Compile Include="config.py" />
@@ -46,8 +45,10 @@
     <Folder Include="MyCode\templates\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets\dash.css" />
-    <Content Include="Mycode\static\old_base.css" />
+    <Content Include="assets\a.css" />
+    <Content Include="assets\base_dash.css" />
+    <Content Include="assets\element_dash.css" />
+    <Content Include="MyCode\static\old_base.css" />
     <Content Include="MyCode\templates\base.html" />
     <Content Include="MyCode\static\base.css" />
     <Content Include="MyCode\templates\dash.html" />

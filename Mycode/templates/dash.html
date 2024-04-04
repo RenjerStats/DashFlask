@@ -1,4 +1,52 @@
-﻿<!DOCTYPE html>
+﻿<html>
+    <head>
+        <meta charset="utf-8" />
+        <html lang='ru'>
+        <link rel="icon" href=https://icon-icons.com/icons2/3404/PNG/96/dashboard_icon_215905.png type="image/x-icon">
+        <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
+        <title>Главная страница ProstoBank</title>
+    </head>
+    <body>
+        <div id="wrap">
+            <header>
+                <div class="wrap">
+                   <div class="header">
+                    <div class="logo">
+                     <a href="/"><img src="https://i.yapx.ru/XTIOq.png" alt=""/></a>
+                    </div>
+                    <div class="nav">
+                     <ul>
+                     <li  class="active"><a href="/dash3">Ставка Центрального Банка</a></li>
+                     <li><a href="/dash1">Курс валют</a></li>
+                     <li><a href="/dash2">Акции компаний</a></li>
+                     </ul>
+                    </div>
+                    <div class="clear"></div> 
+                   </div>
+                  </div>
+            </header>
+    </div>
+    <div class="content">
+        <div class="grath">
+            {%app_entry%}
+            {%config%}
+            {%scripts%}
+            {%renderer%}
+        </div>
+    </div>
+  
+          <div class="footer">
+          <h4>Выполнила команда Data Sonic</h4>
+          </div>
+    </body>
+</html>
+
+  
+
+
+
+
+<!DOCTYPE html>
     <html>
         <head>
             {%metas%}
@@ -18,11 +66,7 @@
                     <hr>
                 </header>
             </div>
-            {%app_entry%}
-            <footer>
-                {%config%}
-                {%scripts%}
-                {%renderer%}
+
             </footer>
         </body>
     </html>

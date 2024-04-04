@@ -18,8 +18,8 @@ def create_dash3(requests_pathname_prefix):
         optionHeight=50,
         )
     dop_layout = html.Div(children=[
+        dropdown_curses,
         dcc.Graph(id="base_graph", figure=px.scatter()),
-        dropdown_curses
         ])
     
     dash.set_layout(dop_layout, "Ставка Центробанка")
@@ -42,9 +42,9 @@ def UI(app):
             return px.line()
         
         data = []
-        if 'ключевая ставка ЦБ' in curses: data.append(Economic_data.select_central_bank_rate(str_start, str_end).assign(name="инфляция"))
-        if 'инфляция' in curses: data.append(Economic_data.select_inflation_rate(str_start, str_end).assign(name="Курс ЦБ"))
+        if 'ключевая ставка ЦБ' in curses: data.append(Economic_data.select_central_bank_rate(str_start, str_end).assign(name="Курс ЦБ"))
+        if 'инфляция' in curses: data.append(Economic_data.select_inflation_rate(str_start, str_end).assign(name="инфляция"))
         df = pd.concat(data)
         
-        return px.line(df, x='date', y='rate', color='name')
+        return px.line(df, x='date', y='rate', color='name', template='plotly_dark')
     

@@ -4,33 +4,38 @@
         <html lang='ru'>
         <link rel="icon" href=https://icon-icons.com/icons2/3404/PNG/96/dashboard_icon_215905.png type="image/x-icon">
         <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
-        {% if title %}
-        <title>{{ title }} - ProstoBank</title>
-        {% else %}
-        <title>PrivetBank</title>
-        {% endif %}
+        <title>ProstoBank</title>
     </head>
     <body>
         <div id="wrap">
             <header>
-                <a href = "/"><button class="image-button"></button></a>
-                <ul class="menu">
-                <a href="/dash1"><button>Курс валют</button></a>
-                <a href="/dash2"><button>Акции компаний</button></a>
-                <a href="/dash3"><button>Ставка Центрального Банка</button></a>
-                </ul>
-                <hr>
+                <div class="wrap">
+                   <div class="header">
+                    <div class="logo">
+                     <a href="/"><img src="https://i.yapx.ru/XTIOq.png" alt=""/></a>
+                    </div>
+                    <div class="nav">
+                     <ul>
+                     <li  class="active"><a href="/dash3">Ставка Центрального Банка</a></li>
+                     <li><a href="/dash1">Курс валют</a></li>
+                     <li><a href="/dash2">Акции компаний</a></li>
+                     </ul>
+                    </div>
+                    <div class="clear"></div> 
+                   </div>
+                  </div>
             </header>
     </div>
-        {% with messages = get_flashed_messages() %}
-        {% if messages %}
-        <ul>
-            {% for message in messages %}
-            <li>{{ message }}</li>
-            {% endfor %}
-        </ul>
-        {% endif %}
-        {% endwith %}
+    <div class="content">
         {% block content %}{% endblock %}
+        <div class="grath">
+        </div>
+    </div>
+  
+          <div class="footer">
+          <h4>Выполнила команда Data Sonic</h4>
+          </div>
     </body>
 </html>
+
+  
