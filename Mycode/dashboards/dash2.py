@@ -40,7 +40,7 @@ def create_dash2(requests_pathname_prefix):
         )
     
     dop_layout = html.Div(children=[
-        html.Div([dropdown_curses, dcc.Graph(id = "base_graph")], className='graph_dropdown'),
+                html.Div([dropdown_curses, dcc.Graph(id = "base_graph")], className='graph_dropdown'),
         html.Div([dropdown_curse, dropdown_date, dcc.Graph(id = 'histogram')], className='graph_dropdown'),
         ], className='row_graph')
     

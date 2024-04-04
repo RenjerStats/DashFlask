@@ -16,7 +16,7 @@ class Base_dashboard(object):
         self.app = dash_app
     
     def set_layout(self, div_with_graphs_and_dropdown, text):
-        text = html.H1(text, className='name_graph', style={'textAlign':'center'})
+        text = html.H1(text, className='name_graph', style={'textAlign': 'center'})
         date_start = dcc.DatePickerSingle(
             className='date_field',
             id="date_start",
@@ -32,16 +32,33 @@ class Base_dashboard(object):
             date=(datetime.now() - timedelta(days=1)).date()
         )
         button_set_date = html.Button(id="button_set_date", children="обновить график", className='button_create')
-    
+        
+        prediction_label = html.Span(id='prediction-label', children='Предсказание:', className='prediction_label')
+        prediction_output = dcc.Textarea(
+            id='prediction-output',
+            className='prediction_output',
+            style={'width': '5%', 'height': '6%'},
+            readOnly=True
+        )
+        prediction_date = dcc.DatePickerSingle(
+            className='date_field',
+            id="prediction_date",
+            is_RTL=True,
+            display_format='DD.MM.YYYY',
+            date=(datetime.now() - timedelta(days=1)).date()
+        )
+        
         layout = html.Div(
             children=[
                 text,
-                html.Div(className='date_punel', children=[date_start, date_end, button_set_date]),
-                html.Div(className = "graph_and_dropdown", children=[div_with_graphs_and_dropdown])
+                html.Span(className='date_punel', children=[date_start, date_end, button_set_date]),
+                html.Span(className='prediction', children=[prediction_date, prediction_label, prediction_output]),
+                html.Div(className = "graph_and_dropdown", children=[div_with_graphs_and_dropdown]),
+                
             ]
         )
         
         self.app.layout = layout
        
-    def init_callbacks(self, func):        
+    def init_callbacks(self, func):     
         func(self.app)
