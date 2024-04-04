@@ -40,9 +40,9 @@ def create_dash2(requests_pathname_prefix):
         )
     
     dop_layout = html.Div(children=[
-        dropdown_curse, dropdown_date, dcc.Graph(id = 'histogram'), 
-        dropdown_curses, dcc.Graph(id = "base_graph"),
-        ])
+        html.Div([dropdown_curses, dcc.Graph(id = "base_graph")], className='graph_dropdown'),
+        html.Div([dropdown_curse, dropdown_date, dcc.Graph(id = 'histogram')], className='graph_dropdown'),
+        ], className='row_graph')
     
     dash.set_layout(dop_layout, "Курсы акций")
     dash.init_callbacks(UI)
@@ -74,7 +74,7 @@ def UI(app):
     Input('dropdown_date', 'value'),
     prevent_initial_call = False
     )
-    def update_candlestick(curse, str_date):  
+    def update_histogram(curse, str_date):  
         str_end = (datetime.now() - timedelta(days=1)).date().strftime('%d-%m-%Y')
         if str_date == "за неделю":
             str_start = (datetime.now() - timedelta(weeks=1)).date().strftime('%d-%m-%Y')

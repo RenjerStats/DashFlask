@@ -45,10 +45,8 @@
     <Folder Include="MyCode\templates\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="assets\a.css" />
     <Content Include="assets\base_dash.css" />
     <Content Include="assets\element_dash.css" />
-    <Content Include="MyCode\static\old_base.css" />
     <Content Include="MyCode\templates\base.html" />
     <Content Include="MyCode\static\base.css" />
     <Content Include="MyCode\templates\dash.html" />

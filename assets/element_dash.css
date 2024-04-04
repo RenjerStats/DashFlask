@@ -1,21 +1,62 @@
-.name_graph {
+input[type="checkbox" i] {
+    margin-right: 5px;
+    accent-color: #3DED97;
+    border: 1px solid black;
+    border-width: 5px;
+}
 
+/* Кнопки */
+.image-button, .menu button {
+    background-color: #2979ff;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    font-size: 14px;
+    margin-right: 10px; /* Отступ между кнопками */
+}
+
+    .image-button:hover, .menu button:hover {
+        background-color: #5393ff;
+    }
+
+.hr {
+    border-top: 1px solid #333;
+}
+
+/* Пользовательские классы для Dash */
+.name_graph {
+    color: #2979ff; /* Цвет заголовка */
 }
 
 .date_field {
-    background-color: #000;
-    color: black;
+    color: #212121;
+    background-color: #dbb829;
+    border: none;
+    padding: 2px, 2px, 2px, 20px;
+    margin: 5px;
 }
 
 .button_create {
-    background-color: #000;
+    background-color: #2979ff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 14px;
+    cursor: pointer;
 }
 
-.graph_and_dropdown {
-    background-color: #000;
-    margin:50px;
+.date_punel, .graph_and_dropdown {
+    margin-bottom: 10px;
 }
 
-.date_punel{
-    background-color: #000;
+.row_graph {
+    display: flex;
+    flex-direction: row;
+}
+
+.graph_dropdown {
+    margin-right:20px;
+    width:100%;
+    height: 500px;
 }

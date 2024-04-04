@@ -11,12 +11,12 @@ class Base_dashboard(object):
     def __init__(self, pathname, name="dash"):
         self.name = name
 
-        dash_app = dash.Dash(requests_pathname_prefix=pathname, update_title='обновление...', external_stylesheets=[dbc.themes.DARKLY])
+        dash_app = dash.Dash(requests_pathname_prefix=pathname, update_title='обновление...')
         dash_app.index_string = open("MyCode/templates/dash.html", encoding='UTF-8').read() # шапка и подвал dashboard-а
         self.app = dash_app
     
     def set_layout(self, div_with_graphs_and_dropdown, text):
-        text = html.H1(text, className='name_graph', style={'textAlign': 'center'})
+        text = html.H1(text, className='name_graph', style={'textAlign':'center'})
         date_start = dcc.DatePickerSingle(
             className='date_field',
             id="date_start",

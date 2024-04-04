@@ -5,6 +5,8 @@
         <link rel="icon" href=https://icon-icons.com/icons2/3404/PNG/96/dashboard_icon_215905.png type="image/x-icon">
         <link rel="stylesheet" href="{{ url_for('static', filename='base.css') }}">
         <title>Главная страница ProstoBank</title>
+        {%favicon%}
+        {%css%}
     </head>
     <body>
         <div id="wrap">
@@ -40,33 +42,3 @@
           </div>
     </body>
 </html>
-
-  
-
-
-
-
-<!DOCTYPE html>
-    <html>
-        <head>
-            {%metas%}
-            <title>{%title%}</title>
-            {%favicon%}
-            {%css%}
-        </head>
-        <body class="dash-template">
-            <div id="wrap">
-                <header>
-                    <a href = "/"><button class="image-button"></button></a>
-                    <ul class="menu">
-                    <a href="/dash1"><button>Курс валют</button></a>
-                    <a href="/dash2"><button>Акции компаний</button></a>
-                    <a href="/dash3"><button>Ставка Центрального Банка</button></a>
-                    </ul>
-                    <hr>
-                </header>
-            </div>
-
-            </footer>
-        </body>
-    </html>

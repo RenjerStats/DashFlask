@@ -1,80 +1,65 @@
-.wrap {
-    margin: 0 auto;
-    width: 100%;
+/* Основной фон страницы */
+body {
+    background-color: #121212;
+    background-image: linear-gradient(90deg, rgba(2,0,36,1) 22%, rgba(32,42,174,1) 88%, rgba(0,122,255,1) 100%);
+    font-family: Arial, sans-serif;
 }
 
-.header {
-    padding: 1%;
+/* Шапка */
+header {
+    background: rgb(0, 0, 0);
+    padding: 10px 0;
 }
 
-.logo {
-    float: left;
+.wrap .header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10%;
 }
 
-    .logo a {
-        display: block;
+    .wrap .header .logo a img {
+        height: 50px;
     }
 
-.nav {
-    float: right;
-    margin-top: 0%;
+.nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
 }
 
-    .nav > ul > li {
-        display: inline-block;
+    .nav ul li {
+        margin-left: 20px;
     }
 
-        .nav > ul > li.active a {
-            background: #fff;
-            color: #000;
-        }
-
-        .nav > ul > li > a {
-            display: block;
-            font-size: 20px;
-            text-transform: uppercase;
-            padding: 15px;
-            color: #fff;
-            -webkit-transition: 0.7s;
-            -moz-transition: 0.7s;
-            -o-transition: 0.7s;
-            transition: 0.7s;
+        .nav ul li a {
             text-decoration: none;
-            font: 14px Arial Black;
+            color: #e0e0e0;
+            font-size: 16px;
         }
 
-            .nav > ul > li > a:hover {
-                color: #000;
-                background: #fff;
+            .nav ul li.active a, .nav ul li a:hover {
+                color: #2979ff;
             }
 
-.header {
-    background: #000;
-    padding: 1%;
-}
-
+/* Контент */
 .content {
-    margin: 0%;
-    padding: 1%;
-    background-color: #000;
-    color: #fff;
+    padding: 20px 10%;
 }
 
-    .content > h2 {
-        margin-top: 10%;
-        width: 650px;
-    }
-
-.grath {
-    width: 100%;
-    height: 80%;
-    background-color: #555;
-    margin-top: 10%;
-}
-
+/* footer стили */
 .footer {
-    background: #333;
-    padding: 5px;
-    color: #fff;
-    clear: left;
+    background-color: #212121;
+    color: #bdbdbd;
+    text-align: center;
+    padding: 20px 0;
+    margin-top: 20px;
+}
+
+
+/* Стили для тёмной темы date picker */
+.DateInput, .SingleDatePicker, .DateRangePicker, .DateInput_input {
+    background-color: #333;
+    color: #e0e0e0;
 }
