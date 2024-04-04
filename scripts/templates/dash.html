@@ -1,0 +1,28 @@
+﻿<!DOCTYPE html>
+    <html>
+        <head>
+            {%metas%}
+            <title>{%title%}</title>
+            {%favicon%}
+            {%css%}
+        </head>
+        <body class="dash-template">
+            <div id="wrap">
+                <header>
+                    <a href = "/"><button class="image-button"></button></a>
+                    <ul class="menu">
+                    <a href="/dash1"><button>Курс валют</button></a>
+                    <a href="/dash2"><button>Акции компаний</button></a>
+                    <a href="/dash3"><button>Ставка Центрального Банка</button></a>
+                    </ul>
+                    <hr>
+                </header>
+            </div>
+            {%app_entry%}
+            <footer>
+                {%config%}
+                {%scripts%}
+                {%renderer%}
+            </footer>
+        </body>
+    </html>

@@ -1,0 +1,61 @@
+header {
+    width: 100%;
+    background: #fff;
+    height: 80px;
+}
+
+.title {
+    font-size: 50px;
+    padding-top: 0px;
+    text-align: center;
+}
+
+.menu {
+    list-style: none;
+    position: absolute;
+    top: 0;
+    right: 25%;
+}
+
+button {
+    color: #000000;
+    background-color: #fff;
+    width: 250px;
+    height: 50px;
+    border-radius: 20px;
+    font: 14px Arial Black;
+}
+
+    button:hover {
+        color: #fff;
+        background-color: #000
+    }
+
+    button:active {
+        transform: scale(0.95);
+    }
+
+.image-button {
+    width: 229px;
+    height: 59px;
+    border: none;
+    background-image: url('https://i.yapx.ru/XTFNv.png');
+    background-size: cover;
+    left: 5%;
+    margin-top: 10px;
+}
+
+    .image-button:hover {
+        opacity: 0.8;
+    }
+
+    .image-button:active {
+        transform: scale(0.95);
+    }
+
+footer {
+    padding: 10px 20px;
+    background: #000;
+    color: white;
+    font: 14px Arial Black;
+}
