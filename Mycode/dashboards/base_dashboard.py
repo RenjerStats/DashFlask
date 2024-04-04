@@ -16,7 +16,7 @@ class Base_dashboard(object):
         self.app = dash_app
     
     def set_layout(self, div_with_graphs_and_dropdown, text):
-        text = html.H1(text)
+        text = html.H1(text, style={'color':'red'})
         date_start = dcc.DatePickerSingle(
             id="date_start",
             is_RTL=True,

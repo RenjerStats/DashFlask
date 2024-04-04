@@ -5,6 +5,7 @@ from bs4 import BeautifulSoup
 import pandas as pd
 from datetime import datetime
 from datetime import timedelta
+import calendar
 
 import aiohttp
 import aiomoex
@@ -84,28 +85,35 @@ class Economic_data:
         return df.iloc[::-1].reset_index(drop=True)
 
     def update_inflation_rate():
+        if os.path.exists('./data/inflation_rate.csv'):
+            os.remove('./data/inflation_rate.csv')
         html = requests.get(f'https://www.cbr.ru/hd_base/infl/?UniDbQuery.Posted=True&UniDbQuery.From=01.01.2013'
                             f'&UniDbQuery.To={today_date.replace("-", ".")}').text
         soup = BeautifulSoup(html, 'html.parser')
         tables = str(soup.find_all('table')).split()
-        months = []
+        dates = []
         infl_pers = []
-        for i in range(len(tables) - 1):
+        for i in range(len(tables)):
             if tables[i][:4] == '<td>' and tables[i][-5:] == '</td>':
                 if tables[i].find('.') > -1:
-                    months.append(tables[i][4:-5].replace(".", "-"))
-                elif tables[i].find(',') > -1 and not (tables[i] == '<td>4,00</td>' and tables[i + 1] == '</tr>'):
-                    infl_pers.append(float(tables[i][4:-5].replace(',', '.')))
-        infl_pers = infl_pers[1::2]
-        df = pd.DataFrame({'month': months, 'inflation': infl_pers})
+                    month = tables[i][4:6]
+                    year = tables[i][7:-5]
+                    first_day, second_day = calendar.monthrange(int(year), int(month))
+                    for i in range(first_day, second_day + 1):
+                        if i < 10:
+                            dates.append(f'0{i}-{month}-{year}')
+                        else:
+                            dates.append(f'{i}-{month}-{year}')
+                elif tables[i].find(',') > -1 and not (tables[i] == '<td>4,00</td>' and tables[i + 1] == '</tr>') \
+                        and i % 2 == 1:
+                    infl_pers.extend([float(tables[i][4:-5].replace(',', '.'))] * (len(dates) - len(infl_pers)))
+        df = pd.DataFrame({'date': dates, 'rate': infl_pers})
         df.to_csv('data/inflation_rate.csv')
 
-    def select_inflation_rate(start_month, end_month):
+    def select_inflation_rate(start_date, end_date):
         df = pd.read_csv('data/inflation_rate.csv')
-        print(start_month, end_month)
-        df = df.iloc[df.index[df['month'] == end_month].tolist()[0]:df.index[df['month'] == start_month].tolist()[0] + 1]
+        df = df.iloc[df.index[df['date'] == end_date].tolist()[0]:df.index[df['date'] == start_date].tolist()[0] + 1]
         return df.iloc[::-1].reset_index(drop=True)
-    
 
     def update_currency_exchange_rate():
         for curr in currency_links.keys():
@@ -160,17 +168,15 @@ class Economic_data:
                 for line in data:
                     if last_date == '':
                         date = datetime.strptime(line['TRADEDATE'], '%Y-%m-%d').strftime('%d-%m-%Y')
-                        fixed_data.append([date, line['VOLUME'], line['VALUE']])
+                        fixed_data.append([date, line['CLOSE']])
                         last_date = datetime.strptime(date, '%d-%m-%Y')
                     else:
                         date = datetime.strptime(line['TRADEDATE'], '%Y-%m-%d')
                         while last_date < date:
                             last_date += delta
-                            fixed_data.append([str(last_date.strftime('%d-%m-%Y')), line['VOLUME'], line['VALUE']])
+                            fixed_data.append([str(last_date.strftime('%d-%m-%Y')), line['CLOSE']])
                         last_date = date
-                df = pd.DataFrame(fixed_data, columns=['date', 'volume', 'value'])
-                df['rate'] = df.value / df.volume
-                df.drop(['volume', 'value'], axis=1, inplace=True)
+                df = pd.DataFrame(fixed_data, columns=['date', 'rate'])
                 if os.path.exists(f'./data/shares/{cmpny}_shares_rate.csv'):
                     os.remove(f'./data/shares/{cmpny}_shares_rate.csv')
                 df.to_csv(f'data/shares/{cmpny}_shares_rate.csv')
@@ -187,4 +193,10 @@ class Economic_data:
     
     def convert_date(date):
         return datetime.strptime(date, '%Y-%m-%d').strftime('%d-%m-%Y')
+
+def min_date(str_date1, str_date2):
+    return min(str_date1, str_date2, key = lambda a: a[::-1])
+
+def max_date(str_date1, str_date2):
+    return max(str_date1, str_date2, key=lambda a: a[::-1])
     

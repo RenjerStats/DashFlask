@@ -11,9 +11,9 @@ def create_dash3(requests_pathname_prefix):
     
     dropdown_curses = dcc.Dropdown(
         options=["ключевая ставка ЦБ", "инфляция"],
-        value="ключевая ставка ЦБ",
+        value=["ключевая ставка ЦБ"],
         id = 'dropdown_curses',
-        multi=False,
+        multi=True,
         clearable=False,
         optionHeight=50,
         )
@@ -42,8 +42,8 @@ def UI(app):
             return px.line()
         
         data = []
-        if curses == 'ключевая ставка ЦБ': data.append(Economic_data.select_central_bank_rate(str_start, str_end).assign(name="инфляция"))
-        elif curses == 'инфляция': data.append(Economic_data.select_inflation_rate(str_start, str_end).assign(name="Курс ЦБ"))
+        if 'ключевая ставка ЦБ' in curses: data.append(Economic_data.select_central_bank_rate(str_start, str_end).assign(name="инфляция"))
+        if 'инфляция' in curses: data.append(Economic_data.select_inflation_rate(str_start, str_end).assign(name="Курс ЦБ"))
         df = pd.concat(data)
         
         return px.line(df, x='date', y='rate', color='name')

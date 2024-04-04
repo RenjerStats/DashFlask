@@ -5,6 +5,7 @@ import plotly.express as px
 from dash import dcc
 from dash import html
 import pandas as pd
+import plotly.graph_objects as go
 
 def create_dash2(requests_pathname_prefix):
     dash = Base_dashboard(requests_pathname_prefix, "Курсы акций")
@@ -17,8 +18,12 @@ def create_dash2(requests_pathname_prefix):
         clearable=False,
         optionHeight=50,
         )
+    
+    candlestick = go.Figure(id = 'candlestick', data=[go.Candlestick()])
+    candlestick.update_layout(xaxis_rangeslider_visible=True)
     dop_layout = html.Div(children=[
         dcc.Graph(id="base_graph", figure=px.scatter()),
+        go.
         dropdown_curses
         ])
     
@@ -45,4 +50,25 @@ def UI(app):
         df = pd.concat(data)
         
         return px.line(df, x='date', y='rate', color='name')
+    
+    @app.callback(
+    Output('base_graph', 'figure'),
+    Input('button_set_date', 'n_clicks'),
+    State('date_start', "date"),
+    State('date_end', "date"),
+    State('dropdown_curses', 'value'),
+    prevent_initial_call = False
+    )
+    def update_date(count_click, str_start, str_end, curses):
+        str_start = Economic_data.convert_date(str_start)
+        str_end = Economic_data.convert_date(str_end)
+        if curses == []:
+            return px.line()
+        
+        data = [Economic_data.select_shares_rate(curse, str_start, str_end).assign(name=curse) for curse in curses]
+        df = pd.concat(data)
+        
+        return px.line(df, x='date', y='rate', color='name')
+    
+
     
