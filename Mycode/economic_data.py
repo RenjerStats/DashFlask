@@ -3,8 +3,8 @@ import requests
 from bs4 import BeautifulSoup
 
 import pandas as pd
-from datetime import datetime
-from datetime import timedelta
+import numpy as np
+from datetime import datetime, timedelta
 import calendar
 
 import aiohttp
@@ -185,6 +185,18 @@ class Economic_data:
         df = pd.read_csv(f'data/currency/{currency}_exchange_rate.csv')
         df = df.iloc[df.index[df['date'] == end_date].tolist()[0]:df.index[df['date'] == start_date].tolist()[0] + 1]
         return df.iloc[::-1].reset_index(drop=True)
+    
+    def select_shares_rate_percent(company, start_date, end_date):
+        df = pd.read_csv(f'data/shares/{company}_shares_rate.csv')
+        df = df.iloc[df.index[df['date'] == start_date].tolist()[0]:df.index[df['date'] == end_date].tolist()[0] + 1]
+        
+        x = df['rate'].to_list()
+        x = np.diff(x) / x[:-1] * 100
+        df = df.iloc [1: , :]
+        df['rate'] = x
+        
+        df['color'] = df['rate'].apply(lambda x: 'green' if x >= 0 else 'crimson')
+        return df.iloc[::-1].reset_index(drop=True)
 
     def select_shares_rate(company, start_date, end_date):
         df = pd.read_csv(f'data/shares/{company}_shares_rate.csv')
@@ -193,10 +205,4 @@ class Economic_data:
     
     def convert_date(date):
         return datetime.strptime(date, '%Y-%m-%d').strftime('%d-%m-%Y')
-
-def min_date(str_date1, str_date2):
-    return min(str_date1, str_date2, key = lambda a: a[::-1])
-
-def max_date(str_date1, str_date2):
-    return max(str_date1, str_date2, key=lambda a: a[::-1])
     
