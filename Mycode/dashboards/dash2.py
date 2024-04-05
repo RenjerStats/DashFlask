@@ -1,4 +1,7 @@
 ﻿from datetime import timedelta
+from re import template
+
+from plotly.graph_objs import Layout
 from .base_dashboard import Base_dashboard
 from dash import Input, Output, State
 from Mycode.economic_data import Economic_data
@@ -38,9 +41,9 @@ def create_dash2(requests_pathname_prefix):
         clearable=False,
         optionHeight=50,
         )
-    
+    graph1 = dcc.Graph(id = "base_graph")
     dop_layout = html.Div(children=[
-                html.Div([dropdown_curses, dcc.Graph(id = "base_graph")], className='graph_dropdown'),
+                html.Div([dropdown_curses, graph1], className='graph_dropdown'),
         html.Div([dropdown_curse, dropdown_date, dcc.Graph(id = 'histogram')], className='graph_dropdown'),
         ], className='row_graph')
     
@@ -91,8 +94,10 @@ def UI(app):
                 x=df['date'],
                 y=df['rate'],
                 marker_color=df['color'].to_list(),
-            )
-        ) 
+            ),
+            layout=go.Layout(height=350, )
+        )   
+        fig.update_layout(template="plotly_dark")
         return fig
     
 
