@@ -81,7 +81,8 @@ class Economic_data:
 
     def select_central_bank_rate(start_date, end_date):
         df = pd.read_csv('data/central_bank_rate.csv')
-        df = df.iloc[df.index[df['date'] == end_date].tolist()[0]:df.index[df['date'] == start_date].tolist()[0] + 1]
+        df['date'] = [datetime.strptime(d, '%d-%m-%Y').date().strftime('%Y-%m-%d') for d in df['date'].to_list()]
+        df = df[(df['date'] >= start_date) & (df['date'] <= end_date)]
         return df.iloc[::-1].reset_index(drop=True)
 
     def update_inflation_rate():
@@ -100,6 +101,7 @@ class Economic_data:
                     year = tables[i][7:-5]
                     first_day, second_day = calendar.monthrange(int(year), int(month))
                     for i in range(first_day, second_day + 1):
+                        if i == 0: continue
                         if i < 10:
                             dates.append(f'0{i}-{month}-{year}')
                         else:
@@ -107,12 +109,13 @@ class Economic_data:
                 elif tables[i].find(',') > -1 and not (tables[i] == '<td>4,00</td>' and tables[i + 1] == '</tr>') \
                         and i % 2 == 1:
                     infl_pers.extend([float(tables[i][4:-5].replace(',', '.'))] * (len(dates) - len(infl_pers)))
-        df = pd.DataFrame({'date': dates, 'rate': infl_pers})
+        df = pd.DataFrame({'date': dates, 'rate': infl_pers}).sort_values('date')
         df.to_csv('data/inflation_rate.csv')
 
     def select_inflation_rate(start_date, end_date):
         df = pd.read_csv('data/inflation_rate.csv')
-        df = df.iloc[df.index[df['date'] == end_date].tolist()[0]:df.index[df['date'] == start_date].tolist()[0] + 1]
+        df['date'] = [datetime.strptime(d, '%d-%m-%Y').date().strftime('%Y-%m-%d') for d in df['date'].to_list()]
+        df = df[(df['date'] >= start_date) & (df['date'] <= end_date)]
         return df.iloc[::-1].reset_index(drop=True)
 
     def update_currency_exchange_rate():
@@ -183,12 +186,14 @@ class Economic_data:
 
     def select_currency_exchange_rate(currency, start_date, end_date):
         df = pd.read_csv(f'data/currency/{currency}_exchange_rate.csv')
-        df = df.iloc[df.index[df['date'] == end_date].tolist()[0]:df.index[df['date'] == start_date].tolist()[0] + 1]
+        df['date'] = [datetime.strptime(d, '%d-%m-%Y').date().strftime('%Y-%m-%d') for d in df['date'].to_list()]
+        df = df[(df['date'] >= start_date) & (df['date'] <= end_date)]
         return df.iloc[::-1].reset_index(drop=True)
     
     def select_shares_rate_percent(company, start_date, end_date):
         df = pd.read_csv(f'data/shares/{company}_shares_rate.csv')
-        df = df.iloc[df.index[df['date'] == start_date].tolist()[0]:df.index[df['date'] == end_date].tolist()[0] + 1]
+        df['date'] = [datetime.strptime(d, '%d-%m-%Y').date().strftime('%Y-%m-%d') for d in df['date'].to_list()]
+        df = df[(df['date'] >= start_date) & (df['date'] <= end_date)]
         
         x = df['rate'].to_list()
         x = np.diff(x) / x[:-1] * 100
@@ -200,9 +205,11 @@ class Economic_data:
 
     def select_shares_rate(company, start_date, end_date):
         df = pd.read_csv(f'data/shares/{company}_shares_rate.csv')
-        df = df.iloc[df.index[df['date'] == start_date].tolist()[0]:df.index[df['date'] == end_date].tolist()[0] + 1]
+        df['date'] = [datetime.strptime(d, '%d-%m-%Y').date().strftime('%Y-%m-%d') for d in df['date'].to_list()]
+        df = df[(df['date'] >= start_date) & (df['date'] <= end_date)]
         return df
     
     def convert_date(date):
+        
         return datetime.strptime(date, '%Y-%m-%d').strftime('%d-%m-%Y')
     

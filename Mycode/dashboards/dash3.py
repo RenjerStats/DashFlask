@@ -36,8 +36,6 @@ def UI(app):
     prevent_initial_call = False
     )
     def update_date(count_click, str_start, str_end, curses):
-        str_start = Economic_data.convert_date(str_start)
-        str_end = Economic_data.convert_date(str_end)
         if curses == '':
             return px.line()
         

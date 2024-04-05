@@ -35,7 +35,7 @@ def create_dash2(requests_pathname_prefix):
     
     dropdown_date = dcc.Dropdown(
         options=["за неделю", "за месяц", "за год", "за все время"],
-        value="за год",
+        value="за месяц",
         id = 'dropdown_date',
         multi=False,
         clearable=False,
@@ -61,8 +61,6 @@ def UI(app):
     prevent_initial_call = False
     )
     def update_graph(count_click, str_start, str_end, curses):
-        str_start = Economic_data.convert_date(str_start)
-        str_end = Economic_data.convert_date(str_end)
         if curses == []:
             return px.line()
         
@@ -78,15 +76,15 @@ def UI(app):
     prevent_initial_call = False
     )
     def update_histogram(curse, str_date):  
-        str_end = (datetime.now() - timedelta(days=1)).date().strftime('%d-%m-%Y')
+        str_end = (datetime.now() - timedelta(days=1)).date().strftime('%Y-%m-%d')
         if str_date == "за неделю":
-            str_start = (datetime.now() - timedelta(weeks=1)).date().strftime('%d-%m-%Y')
+            str_start = (datetime.now() - timedelta(weeks=1)).date().strftime('%Y-%m-%d')
         elif str_date == "за месяц":
-            str_start = (datetime.now() - timedelta(days=30)).date().strftime('%d-%m-%Y')
+            str_start = (datetime.now() - timedelta(days=30)).date().strftime('%Y-%m-%d')
         if str_date == "за год":
-            str_start = (datetime.now() - timedelta(days=365)).date().strftime('%d-%m-%Y')
+            str_start = (datetime.now() - timedelta(days=365)).date().strftime('%Y-%m-%d')
         if str_date == "за все время":
-            str_start = (datetime.now() - timedelta(days=365*5)).date().strftime('%d-%m-%Y')
+            str_start = (datetime.now() - timedelta(days=365*5)).date().strftime('%Y-%m-%d')
         
         df = Economic_data.select_shares_rate_percent(curse, str_start, str_end)    
 
@@ -95,7 +93,7 @@ def UI(app):
                 y=df['rate'],
                 marker_color=df['color'].to_list(),
             ),
-            layout=go.Layout(height=350, )
+            layout=go.Layout(height=350)
         )   
         fig.update_layout(template="plotly_dark")
         return fig
